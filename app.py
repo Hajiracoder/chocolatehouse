@@ -6,14 +6,12 @@ app = Flask(__name__)
 DATABASE = 'chocolate_house.db'
 
 
-# Utility function to interact with the database
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 
-# Initialize the database with tables
 def init_db():
     with closing(get_db_connection()) as conn:
         with open('schema.sql') as f:
@@ -21,14 +19,12 @@ def init_db():
         conn.commit()
 
 
-# Route to initialize the database
 @app.route('/initdb', methods=['GET'])
 def initialize_database():
     init_db()
     return "Database initialized!", 200
 
 
-# Routes for Seasonal Flavors
 @app.route('/seasonal_flavors', methods=['GET', 'POST'])
 def manage_seasonal_flavors():
     if request.method == 'POST':
@@ -41,13 +37,11 @@ def manage_seasonal_flavors():
             conn.commit()
         return jsonify({"message": "Seasonal flavor added"}), 201
 
-    # GET method: Retrieve all seasonal flavors
     with get_db_connection() as conn:
         flavors = conn.execute("SELECT * FROM seasonal_flavors").fetchall()
     return jsonify([dict(row) for row in flavors]), 200
 
 
-# Routes for Ingredients Inventory
 @app.route('/ingredients', methods=['GET', 'POST'])
 def manage_ingredients():
     if request.method == 'POST':
@@ -60,13 +54,12 @@ def manage_ingredients():
             conn.commit()
         return jsonify({"message": "Ingredient added"}), 201
 
-    # GET method: Retrieve all ingredients
+  
     with get_db_connection() as conn:
         ingredients = conn.execute("SELECT * FROM ingredients").fetchall()
     return jsonify([dict(row) for row in ingredients]), 200
 
 
-# Routes for Customer Feedback
 @app.route('/customer_feedback', methods=['POST'])
 def customer_feedback():
     data = request.get_json()
@@ -89,14 +82,13 @@ app = Flask(__name__)
 DATABASE = 'chocolate_house.db'
 
 
-# Utility function to interact with the database
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
 
-# Initialize the database with tables
+
 def init_db():
     with closing(get_db_connection()) as conn:
         with open('schema.sql') as f:
@@ -104,14 +96,12 @@ def init_db():
         conn.commit()
 
 
-# Route to initialize the database
 @app.route('/initdb', methods=['GET'])
 def initialize_database():
     init_db()
     return "Database initialized!", 200
 
 
-# Routes for Seasonal Flavors
 @app.route('/seasonal_flavors', methods=['GET', 'POST'])
 def manage_seasonal_flavors():
     if request.method == 'POST':
@@ -124,13 +114,12 @@ def manage_seasonal_flavors():
             conn.commit()
         return jsonify({"message": "Seasonal flavor added"}), 201
 
-    # GET method: Retrieve all seasonal flavors
+    
     with get_db_connection() as conn:
         flavors = conn.execute("SELECT * FROM seasonal_flavors").fetchall()
     return jsonify([dict(row) for row in flavors]), 200
 
 
-# Routes for Ingredients Inventory
 @app.route('/ingredients', methods=['GET', 'POST'])
 def manage_ingredients():
     if request.method == 'POST':
@@ -143,13 +132,12 @@ def manage_ingredients():
             conn.commit()
         return jsonify({"message": "Ingredient added"}), 201
 
-    # GET method: Retrieve all ingredients
+
     with get_db_connection() as conn:
         ingredients = conn.execute("SELECT * FROM ingredients").fetchall()
     return jsonify([dict(row) for row in ingredients]), 200
 
 
-# Routes for Customer Feedback
 @app.route('/customer_feedback', methods=['POST'])
 def customer_feedback():
     data = request.get_json()
